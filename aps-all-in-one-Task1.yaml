@@ -136,7 +136,7 @@ spec:
         "kubernetes.io/os": linux
       containers:
         - name: order-service
-          image: ramymohamed/order-service-l8:latest # Custom image for order service
+          image: xyzhao0201/order-service-l8:latest # Custom image for order service
           ports:
             - containerPort: 3000 # Order service listens on this port
           env: # Environment variables for configuration
@@ -230,7 +230,7 @@ spec:
         "kubernetes.io/os": linux
       containers:
         - name: makeline-service
-          image: ramymohamed/makeline-service-l8:latest # Custom Makeline service image
+          image: xyzhao0201/makeline-service-l8:latest # Custom Makeline service image
           ports:
             - containerPort: 3001 # Makeline service listens on this port
           env: # Environment variables for configuration
@@ -309,7 +309,7 @@ spec:
         "kubernetes.io/os": linux
       containers:
         - name: product-service
-          image: ramymohamed/product-service-l8:latest # Custom product service image
+          image: xyzhao0201/product-service-l8:latest # Custom product service image
           ports:
             - containerPort: 3002 # Product service listens on this port
           env: # Environment variables for configuration
@@ -370,7 +370,7 @@ spec:
         "kubernetes.io/os": linux
       containers:
         - name: store-front
-          image: ramymohamed/store-front-l8:latest # Front-end store application
+          image: xyzhao0201/store-front-l8:latest # Front-end store application
           ports:
             - containerPort: 8080 # Front-end app port
               name: store-front
@@ -440,7 +440,7 @@ spec:
         "kubernetes.io/os": linux
       containers:
         - name: store-admin
-          image: ramymohamed/store-admin-l8:latest # Admin interface for store
+          image: xyzhao0201/store-admin-l8:latest # Admin interface for store
           ports:
             - containerPort: 8081 # Admin app port
               name: store-admin
@@ -510,7 +510,7 @@ spec:
         "kubernetes.io/os": linux
       containers:
         - name: ai-service
-          image: ramymohamed/ai-service-l8:latest
+          image: xyzhao0201/ai-service-l8:latest
           ports:
             - containerPort: 5001
           env:
