@@ -15,14 +15,22 @@
 <img width="1463" height="812" alt="dockerimages" src="https://github.com/user-attachments/assets/08b1e650-7920-419d-bfd1-701a32922d54" />
 
 The Task 1 deployment file now uses the following Docker images:
-- store-front-l8: `xyzhao0201/store-front-l8:latest`  
-- store-admin-l8: `xyzhao0201/store-admin-l8:latest`  
-- order-service-l8: `xyzhao0201/order-service-l8:latest`  
-- product-service-l8: `xyzhao0201/product-service-l8:latest`  
-- makeline-service-l8: `xyzhao0201/makeline-service-l8:latest`  
-- ai-service-l8: `xyzhao0201/ai-service-l8:latest`  
-- virtual-customer: `xyzhao0201/virtual-customer-l8:latest`  
-- virtual-worker-l8: `xyzhao0201/virtual-worker-l8:latest`  
+- **store-front-L8:**`xyzhao0201/store-front-l8:latest`  
+- **store-admin-L8:** `xyzhao0201/store-admin-l8:latest`  
+- **order-service-L8:** `xyzhao0201/order-service-l8:latest`  
+- **product-service-L8:** `xyzhao0201/product-service-l8:latest`  
+- **makeline-service-L8:** `xyzhao0201/makeline-service-l8:latest`  
+- **ai-service-L8:** `xyzhao0201/ai-service-l8:latest`  
+- **virtual-customer-L8:** `xyzhao0201/virtual-customer-l8:latest`  
+- **virtual-worker-L8:** `xyzhao0201/virtual-worker-l8:latest`  
+
+## Live Application (during demo)
+
+The application was deployed on Azure Kubernetes Service and accessed via the external IP during the demo recording.
+- **Store Front:** https://20.172.99.166
+- **Store Admin:** https://20.25.168.11  
+
+----
 
 ## Technical Explanations: Solution of Task 2
 
@@ -36,8 +44,6 @@ To make the data persistent, I added PersistentVolumeClaims (PVCs) using `volume
 
 Then I initialized a replica set (`rs0`) manually using the MongoDB shell. I verified the setup using `rs.status()`, which confirmed that all three nodes were part of the replica set. This setup improves availability because the system can continue working even if one node fails.
 
----
-
 ### RabbitMQ Persistent Storage
 
 In the original setup, RabbitMQ also used ephemeral storage, so messages would be lost after a restart. To fix this, I added a PersistentVolumeClaim to the RabbitMQ StatefulSet.
@@ -45,8 +51,6 @@ In the original setup, RabbitMQ also used ephemeral storage, so messages would b
 The volume is mounted to `/var/lib/rabbitmq`, which is the default directory where RabbitMQ stores its data. This ensures that queues and messages are preserved even if the pod restarts.
 
 I also kept the existing ConfigMap for enabling plugins, so the functionality of RabbitMQ remains unchanged while adding persistence. This ensures message durability across pod restarts.
-
----
 
 ### Azure Managed Service Alternatives
 
@@ -57,8 +61,6 @@ Instead of running these services in Kubernetes, Azure provides managed alternat
 
 - **RabbitMQ → Azure Service Bus**  
   This is a fully managed messaging service that provides reliable queues and message persistence. It simplifies the architecture by removing the need to manage RabbitMQ infrastructure.
-
----
 
 ### Summary
 
