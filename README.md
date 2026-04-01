@@ -11,8 +11,20 @@
 🎥 https://youtu.be/Uj_6QU3qh9Y
 
 ---
+## Task 1 Note
+<img width="1463" height="812" alt="dockerimages" src="https://github.com/user-attachments/assets/08b1e650-7920-419d-bfd1-701a32922d54" />
 
-## Technical Explanations 
+The Task 1 deployment file now uses the following Docker images:
+- store-front-l8: `xyzhao0201/store-front-l8:latest`  
+- store-admin-l8: `xyzhao0201/store-admin-l8:latest`  
+- order-service-l8: `xyzhao0201/order-service-l8:latest`  
+- product-service-l8: `xyzhao0201/product-service-l8:latest`  
+- makeline-service-l8: `xyzhao0201/makeline-service-l8:latest`  
+- ai-service-l8: `xyzhao0201/ai-service-l8:latest`  
+- virtual-customer: `xyzhao0201/virtual-customer-l8:latest`  
+- virtual-worker-l8: `xyzhao0201/virtual-worker-l8:latest`  
+
+## Technical Explanations: Solution of Task 2
 
 ### MongoDB High Availability and Persistent Storage
 
@@ -22,7 +34,7 @@ I also configured a headless service (`clusterIP: None`), which gives each Mongo
 
 To make the data persistent, I added PersistentVolumeClaims (PVCs) using `volumeClaimTemplates`, so each MongoDB pod has its own storage. The data is stored in `/data/db`, which ensures it is not lost even if a pod is deleted and recreated.
 
-Then I initialized a replica set (`rs0`) manually using the MongoDB shell. I verified it using `rs.status()`, which showed that all three nodes were part of the replica set. This setup improves availability because the system can continue working even if one node fails.
+Then I initialized a replica set (`rs0`) manually using the MongoDB shell. I verified the setup using `rs.status()`, which confirmed that all three nodes were part of the replica set. This setup improves availability because the system can continue working even if one node fails.
 
 ---
 
@@ -32,7 +44,7 @@ In the original setup, RabbitMQ also used ephemeral storage, so messages would b
 
 The volume is mounted to `/var/lib/rabbitmq`, which is the default directory where RabbitMQ stores its data. This ensures that queues and messages are preserved even if the pod restarts.
 
-I also kept the existing ConfigMap for enabling plugins, so the functionality of RabbitMQ remains unchanged while adding persistence.
+I also kept the existing ConfigMap for enabling plugins, so the functionality of RabbitMQ remains unchanged while adding persistence. This ensures message durability across pod restarts.
 
 ---
 
